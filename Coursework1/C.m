@@ -2,7 +2,7 @@ clear all;                              % Clear and close all previous
 close all;                              % variables and figures
 
 load cw1a.mat;                          % Load in the data for training
-xs = linspace(-4, 4, 31)';              % 61 test inputs
+xs = linspace(-4, 4, 101)';              % 61 test inputs
 
 meanfunc = []; hyp.mean = [];           % empty: don't use a mean function
 covfunc = @covPeriodic; hyp.cov = [0 0 0];  % Periodic covariance function

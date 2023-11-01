@@ -6,8 +6,8 @@ load cw1e.mat;
 figure(1)
 mesh(reshape(x(:,1),11,11),reshape(x(:,2),11,11),reshape(y,11,11));
 
-Bounds = 6;
-Intervals = 0.5;
+Bounds = 8;
+Intervals = 0.05;
 Steps = (2*Bounds) / Intervals + 1;
 
 xs = [];
@@ -37,9 +37,9 @@ nlml_1 = gp(hyp2_1, @infGaussLik, meanfunc_1, covfunc_1, likfunc_1, x, y)
 
 
 figure(2)
-mesh(xs1, xs2, reshape(mu_1+2*sqrt(s2_1), Steps, Steps),'FaceAlpha','0.25');
+mesh(xs1, xs2, reshape(mu_1+2*sqrt(s2_1), Steps, Steps),'FaceAlpha','0.05');
 hold on;
-mesh(xs1, xs2, reshape(mu_1-2*sqrt(s2_1), Steps, Steps),'FaceAlpha','0.25');
+mesh(xs1, xs2, reshape(mu_1-2*sqrt(s2_1), Steps, Steps),'FaceAlpha','0.05');
 hold on;
 surf(xs1, xs2, reshape(mu_1,Steps,Steps),'FaceAlpha','0.5');
 
@@ -61,8 +61,8 @@ nlml_2 = gp(hyp2_2, @infGaussLik, meanfunc_2, covfunc_2, likfunc_2, x, y)
 
 
 figure(3)
-mesh(xs1, xs2, reshape(mu_2+2*sqrt(s2_2), Steps, Steps),'FaceAlpha','0.25');
+mesh(xs1, xs2, reshape(mu_2+2*sqrt(s2_2), Steps, Steps),'FaceAlpha','0.05');
 hold on;
-mesh(xs1, xs2, reshape(mu_2-2*sqrt(s2_2), Steps, Steps),'FaceAlpha','0.25');
+mesh(xs1, xs2, reshape(mu_2-2*sqrt(s2_2), Steps, Steps),'FaceAlpha','0.05');
 hold on;
 surf(xs1, xs2, reshape(mu_2,Steps,Steps),'FaceAlpha','0.5');
