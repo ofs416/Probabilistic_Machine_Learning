@@ -40,8 +40,6 @@ nlml_1 = gp(hyp2_1, @infGaussLik, meanfunc_1, covfunc_1, likfunc_1, x, y)
 
 figure()
 
-subplot(2, 2, 2);
-
 mesh(xs1, xs2, reshape(mu_1+2*sqrt(s2_1), Steps, Steps),'FaceAlpha','0.05');
 hold on;
 mesh(xs1, xs2, reshape(mu_1-2*sqrt(s2_1), Steps, Steps),'FaceAlpha','0.05');
@@ -51,7 +49,7 @@ hold on;
 title('Plot of Training Data and 95% Confidence Bands'); 
 xlabel('Input, X1'); ylabel('Input, X2'); zlabel('Output, Y');
 
-subplot(2, 2, 1);
+figure()
 mesh(xs1, xs2, reshape(mu_1,Steps,Steps),'FaceAlpha','0.5');
 hold on;
 plot3(reshape(x(:,1),11,11),reshape(x(:,2),11,11),reshape(y,11,11), '+');
@@ -76,7 +74,7 @@ nlml_2 = gp(hyp2_2, @infGaussLik, meanfunc_2, covfunc_2, likfunc_2, x, y)
 
 
 
-subplot(2, 2, 4);
+figure()
 mesh(xs1, xs2, reshape(mu_2+2*sqrt(s2_2), Steps, Steps),'FaceAlpha','0.05');
 hold on;
 mesh(xs1, xs2, reshape(mu_2-2*sqrt(s2_2), Steps, Steps),'FaceAlpha','0.05');
@@ -87,7 +85,7 @@ title('Plot of Training Data and 95% Confidence Bands');
 xlabel('Input, X1'); ylabel('Input, X2'); zlabel('Output, Y');
 
 
-subplot(2, 2, 3);
+figure()
 title('GP with a Squared Exponential Covariance Function'); 
 xlabel('X1'); ylabel('X2'); zlabel('Y');
 mesh(xs1, xs2, reshape(mu_2,Steps,Steps),'FaceAlpha','0.5');

@@ -14,15 +14,13 @@ evidence = zeros(num_test);
 hyp_opts = zeros(num_test , 3);
 titles = ["First Local Optimum", "Second Local Optimum","Third Local Optimum"];
 params = [[-1, 0, 0]; [2, -0.36, -0.4]]; % [1, 0, 0]; [0, 1, 0];
-figure()
-hold on;
 for i = 1:num_test
     hyp_init = struct('mean', [], 'cov', [params(i, 1), params(i, 2)], 'lik', params(i, 3));
     hyp_opt = minimize(hyp_init, @gp, -100, @infGaussLik, meanfunc, covfunc, likfunc, x, y);
     evidence(i) = gp(hyp_opt, @infGaussLik, meanfunc, covfunc, likfunc, x, y);
     hyp_opts(i, :) = [hyp_opt.cov(1), hyp_opt.cov(2), hyp_opt.lik];
-    subplot(num_test, 1, i);
     [mu, s2] = gp(hyp_opt, @infGaussLik, meanfunc, covfunc, likfunc, x, y, xs);
+    figure()
     f = [mu+2*sqrt(s2); flipdim(mu-2*sqrt(s2), 1)];
     fill([xs; flipdim(xs,1)], f, [7 7 7]/8);
     hold on;
@@ -36,7 +34,7 @@ hold off;
 disp(hyp_opts);
 disp(evidence);
 
-N = 100; a = 3.5;
+N = 150; a = 3.5;
 Xs = linspace(-1.5*a,0.75*a,N); Ys = linspace(-2*a,1*a,N);
 Z = zeros(N,N); 
 
@@ -49,7 +47,7 @@ for i = 1:N
 end
 
 figure()
-contourf(Xs, Ys, Z, 10)
+contourf(Xs, Ys, Z, 30)
 colormap("parula")
 cb = colorbar;
 cb.Label.String = 'Log of the Negative Log Marginal Likelihood';
