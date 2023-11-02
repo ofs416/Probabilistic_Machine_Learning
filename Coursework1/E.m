@@ -7,7 +7,7 @@ figure(1)
 mesh(reshape(x(:,1),11,11),reshape(x(:,2),11,11),reshape(y,11,11));
 
 Bounds = 8;
-Intervals = 0.05;
+Intervals = 0.1;
 Steps = (2*Bounds) / Intervals + 1;
 
 xs = [];
