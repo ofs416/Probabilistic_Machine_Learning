@@ -8,11 +8,8 @@ meanfunc = []; hyp.mean = [];           % empty: don't use a mean function
 covfunc = @covSEiso; hyp.cov = [-1 0];  % Squared Exponental covariance function
 likfunc = @likGauss; hyp.lik = 0;       % Gaussian likelihood   
 
-disp(' ');
 hyp2 = minimize(hyp, @gp, -100, @infGaussLik, meanfunc, covfunc, ...
                 likfunc, x, y)
-
-disp(' ');
 nlml = gp(hyp2, @infGaussLik, meanfunc, covfunc, likfunc, x, y)
 
 
@@ -20,5 +17,8 @@ nlml = gp(hyp2, @infGaussLik, meanfunc, covfunc, likfunc, x, y)
 
 
 f = [mu+2*sqrt(s2); flipdim(mu-2*sqrt(s2), 1)];
-fill([xs; flipdim(xs,1)], f, [7 7 7]/8)
-hold on; plot(xs, mu); plot(x, y, '+');hold off;
+fill([xs; flipdim(xs,1)], f, [7 7 7]/8); 
+hold on; 
+title('GP with a Squared Exponential Covariance Function'); 
+xlabel('X'); ylabel('Y');
+plot(xs, mu); plot(x, y, '+'); hold off;

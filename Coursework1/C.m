@@ -22,4 +22,6 @@ nlml = gp(hyp2, @infGaussLik, meanfunc, covfunc, likfunc, x, y)
 
 f = [mu+2*sqrt(s2); flipdim(mu-2*sqrt(s2), 1)];
      fill([xs; flipdim(xs,1)], f, [7 7 7]/8)
+     title('GP with a Periodic Covariance Function'); 
+     xlabel('X'); ylabel('Y');
      hold on; plot(xs, mu); plot(x, y, '+');
