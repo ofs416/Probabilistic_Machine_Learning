@@ -10,6 +10,6 @@ K = feval(covfunc{:}, hyp.cov, x);
 y = chol(K + 1e-6 * eye(400))' * randn(400, 3);
 
 hold on; 
-title(['GP generated samples of noise free functions']); 
+title(['GP generated Sample Functions']); 
 xlabel('X'); ylabel('Y');
 plot(x, y);

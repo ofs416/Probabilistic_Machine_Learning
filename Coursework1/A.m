@@ -19,6 +19,9 @@ nlml = gp(hyp2, @infGaussLik, meanfunc, covfunc, likfunc, x, y)
 f = [mu+2*sqrt(s2); flipdim(mu-2*sqrt(s2), 1)];
 fill([xs; flipdim(xs,1)], f, [7 7 7]/8); 
 hold on; 
-title('GP with a Squared Exponential Covariance Function'); 
-xlabel('X'); ylabel('Y');
-plot(xs, mu); plot(x, y, '+'); hold off;
+title('Predictive Mean and 95% Confindence Bands'); 
+xlabel('Input, X'); ylabel('Output, Y');
+plot(xs, mu);
+g = plot(x, y, '+', 'DisplayName', 'Training Data');
+legend(g);
+hold off;
