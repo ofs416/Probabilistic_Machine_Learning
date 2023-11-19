@@ -34,10 +34,8 @@ def gibbs_sample(G, M, num_iters):
             # Build the iS matrix
             win_player = G[g, 0]
             loss_player = G[g, 1]
-
             iS[win_player, win_player] += 1
             iS[loss_player, loss_player] += 1
-
             iS[win_player, loss_player] -= 1
             iS[loss_player, win_player] -= 1
         # Posterior precision matrix
