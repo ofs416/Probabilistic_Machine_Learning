@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def sorted_barplot(P, W):
+def sorted_barplot(P, W, name):
     """
     Function for making a sorted bar plot based on values in P, and labelling the plot with the
     corresponding names
@@ -18,5 +18,7 @@ def sorted_barplot(P, W):
     plt.barh(xx, P[sorted_indices])
     plt.yticks(np.linspace(0, M, M), labels=sorted_names[:, 0])
     plt.ylim([-2, 109])
+    plt.title(name)
+    plt.savefig('Figures/Exe_'+name+'.png', format="png", dpi=500, bbox_inches="tight")
     plt.show()
 
