@@ -1,6 +1,6 @@
 import numpy as np
 
-def  (p, ran=None):
+def sampleDiscrete(p, ran=None):
     """
     Helper method for sampling from an unnormalized discrete random variable using (generalized) inverse CDF sampling
     :param p: probability mass function over {0,...,num_values-1}
