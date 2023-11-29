@@ -2,6 +2,7 @@ import scipy.io as sio
 import numpy as np
 from scipy.sparse import coo_matrix as sparse
 from sampleDiscrete import sampleDiscrete
+from scipy.stats import entropy
 
 def LDA(A, B, K, alpha, gamma):
 
@@ -43,8 +44,13 @@ def LDA(A, B, K, alpha, gamma):
 
     sk = np.sum(skd, axis=1)  # word to topic assignment counts accross all documents
     # This makes a number of Gibbs sampling sweeps through all docs and words, it may take a bit to run
-    num_gibbs_iters = 10
-    for iter in range(num_gibbs_iters):
+    num_iters_gibbs = 50
+    sk_evolution = np.zeros((num_iters_gibbs + 1, K))
+    sk_evolution[0, :] = sk
+    entropy_evolution = np.zeros(sk_evolution.shape)
+    for k in range(K):
+        entropy_evolution[0, k] = entropy(swk[:, k])
+    for iter in range(num_iters_gibbs):
         for d in range(D):
             z = s[d].todense()  # unique word topic assigmnet counts for document d
             words_in_doc_d = A[np.where(A[:, 0] == d + 1), 1][0] - 1
@@ -66,8 +72,10 @@ def LDA(A, B, K, alpha, gamma):
                         swk[w, kk] += 1
                         sk[kk] += 1
                         skd[kk, d] += 1
+                        entropy_evolution[iter + 1, k] = entropy(swk[:, k])
 
             s[d] = sparse(z)  # store back into sparse structure
+        sk_evolution[iter + 1, :] = sk
 
 
     # compute the perplexity for all words in the test set B
@@ -111,7 +119,7 @@ def LDA(A, B, K, alpha, gamma):
 
     perplexity = np.exp(-lp/nd)  # perplexity
 
-    return perplexity, swk
+    return perplexity, swk, sk_evolution, entropy_evolution
 
 
 if __name__ == '__main__':
@@ -126,7 +134,7 @@ if __name__ == '__main__':
     alpha = .1  # parameter of the Dirichlet over mixture components
     gamma = .1  # parameter of the Dirichlet over words
 
-    perplexity, swk = LDA(A, B, K, alpha, gamma)
+    perplexity, swk, sk_evolution, entropy_evolution = LDA(A, B, K, alpha, gamma)
     print(perplexity)
     I = 20
     indices = np.argsort(-swk, axis=0)

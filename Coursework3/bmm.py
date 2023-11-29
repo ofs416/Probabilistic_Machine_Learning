@@ -32,7 +32,11 @@ def BMM(A, B, K, alpha, gamma):
 
     sk_words = np.sum(swk, axis=0)  # number of words assigned to mixture k over all docs
 
-    num_iters_gibbs = 10
+    num_iters_gibbs = 50
+    sk_docs_evolution = np.zeros((num_iters_gibbs + 1, K))
+    sk_words_evolution = np.zeros((num_iters_gibbs + 1, K))
+    sk_docs_evolution[0, :] = sk_docs.reshape((20,))
+    sk_words_evolution[0, :] = sk_words.reshape((20,))
     # Perform Gibbs sampling through all documents and words
     for iter in range(num_iters_gibbs):
         for d in range(D):
@@ -59,6 +63,8 @@ def BMM(A, B, K, alpha, gamma):
             sk_docs[kk] += 1
             sk_words[kk] += np.sum(c)
             sd[d] = kk
+        sk_docs_evolution[iter + 1, :] = sk_docs.reshape((20,))
+        sk_words_evolution[iter + 1, :] = sk_words.reshape((20,))
 
     # test documents
     lp = 0
@@ -77,7 +83,7 @@ def BMM(A, B, K, alpha, gamma):
 
     perplexity = np.exp(-lp/nd)  # perplexity
 
-    return perplexity, swk
+    return perplexity, swk, sk_docs_evolution, sk_words_evolution
 
 if __name__ == '__main__':
     np.random.seed(1)
@@ -89,7 +95,7 @@ if __name__ == '__main__':
     K = 20  # number of clusters
     alpha = 10  # parameter of the Dirichlet over mixture components
     gamma = .1  # parameter of the Dirichlet over words
-    perplexity, swk = BMM(A, B, K, alpha, gamma)
+    perplexity, swk, sk_docs_evolution, sk_words_evolution = BMM(A, B, K, alpha, gamma)
     print(perplexity)
     I = 20
     indices = np.argsort(-swk, axis=0)
